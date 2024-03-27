@@ -44,8 +44,12 @@ ChaineMain.o: ChaineMain.c
 Chaine.o: Chaine.c
 	$(CC) $(CFLAGS) -c $^
 
-calcultemps:
-	bash tempsdecalcul.sh
+#Calcul du temps
+main.o: main.c
+	$(CC) $(CFLAGS) -c $^
+
+main: Chaine.o Reseau.o Hachage.o ArbreQuat.o main.o SVGwriter.o
+	$(CC) $(CFLAGS) -o $@ $^ -lm
 
 #Nettoyage
 clean:
