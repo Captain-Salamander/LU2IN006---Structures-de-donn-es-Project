@@ -4,7 +4,7 @@
 CC = gcc
 CFLAGS = -Wno-format-zero-length -g
 
-all: ChaineMain ReconstitueReseau HachageMain
+all: ChaineMain ReconstitueReseau HachageMain main
 
 #Général
 SVGwriter.o: SVGwriter.c
