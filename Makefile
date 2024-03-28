@@ -53,4 +53,4 @@ main: Chaine.o Reseau.o Hachage.o ArbreQuat.o main.o SVGwriter.o
 
 #Nettoyage
 clean:
-	rm -f *.o *.html *Main ReconstitueReseau test* time*
+	rm -f *.o *.html *Main ReconstitueReseau test* time* main
