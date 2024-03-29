@@ -51,6 +51,10 @@ main.o: main.c
 main: Chaine.o Reseau.o Hachage.o ArbreQuat.o main.o SVGwriter.o
 	$(CC) $(CFLAGS) -o $@ $^ -lm
 
+graphtemps: main
+	bash tempsdecalcul.sh
+	gnuplot -p < commande.txt
+
 #Nettoyage
 clean:
-	rm -f *.o *.html *Main ReconstitueReseau test* time* main
+	rm -f *.o *.html *Main ReconstitueReseau test* timedata.txt main courbes_vitesse.ps

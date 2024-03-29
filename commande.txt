@@ -1,0 +1,10 @@
+set terminal postscript portrait
+set output "courbes_vitesse.ps"
+
+plot "timedata.txt" using 1:2 title 'Liste' with lines, \
+    "timedata.txt" using 1:3 title 'Hach' with lines, \
+    "timedata.txt" using 1:4 title 'ArbreQuat' with lines
+
+set title "Temps de reconstitution"
+set xlabel "Temps (ms)"
+set ylabel "Taille table de hachage"
