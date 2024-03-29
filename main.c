@@ -4,7 +4,6 @@ Alexander Dimanachki 21112989
 */
 
 #include"ArbreQuat.h"
-#include<time.h>
 
 int main(int argc, char** argv){
     /*Calcul durée de chaque structure*/

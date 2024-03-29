@@ -24,7 +24,7 @@ int main(int argc, char** argv){
     //Ecriture fichier
     FILE *f2 = fopen("testEcriture.cha", "w");
     if(f2==NULL){
-        printf("Erreur ouverture fichier %s\n", argv[1]);
+        printf("Erreur ouverture fichier testEcriture.cha\n");
         return 2;
     }
 
@@ -42,5 +42,21 @@ int main(int argc, char** argv){
     int nbPoints = comptePointsTotal(C);
     printf("Nombre de points au total: %d\n", nbPoints);
 
+    /*Tests Question 6.2*/
+    Chaines *Caleatoire = generationAleatoire(5, 5, 100, 100);
+    FILE *f3 = fopen("testEcritureCAleatoire.cha", "w");
+    if(f3==NULL){
+        printf("Erreur ouverture fichier testEcritureCAleatoire.cha\n");
+        return 2;
+    }
+
+    ecrireChaines(Caleatoire, f3);
+    fclose(f3);
+
+    afficheChainesSVG(Caleatoire, "affichageCAleatoireSVG");
+    int nbPointsAl = comptePointsTotal(Caleatoire);
+    printf("Nombre de points au total pour chaine aleatoire: %d\n", nbPointsAl);
+
     liberer_chaines(C);
+    liberer_chaines(Caleatoire);
 }
