@@ -25,5 +25,5 @@ o(n²) pour la liste:
     Nous parcourons tous les points de toutes les chaines, et pour chacun de ces points nous parcourons les noeuds du Reseau pour savoir si nous l'avons deja créé ou pas.
 o(n/m) pour la table de hachage:
     La taille de la table de hachage (m) correspond au nombre de points maximal pouvant être créé (n). La complexité, dans le cas idéal serait donc o(1) mais nous rencontrons sûrement des collisions qui augmentent la complexité.
-o(log4(n)) pour l'arbreL
+o(log4(n)) pour l'arbre:
     L'arbre quaternaire permet une recherche dichotomique qui permet de trouver un point très rapidement.

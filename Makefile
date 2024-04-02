@@ -20,6 +20,10 @@ ReconstitueReseau.o: ReconstitueReseau.c
 Reseau.o: Reseau.c
 	$(CC) $(CFLAGS) -c $^
 
+#Graphe
+Graphe.o: Graphe.c
+	$(CC) $(CFLAGS) -c $^
+
 #ArbreQuat
 ArbreQuat.o: ArbreQuat.c
 	$(CC) $(CFLAGS) -c $^

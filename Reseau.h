@@ -5,6 +5,7 @@ Alexander Dimanachki 21112989
 
 #ifndef __RESEAU_H__
 #define __RESEAU_H__
+
 #include "Chaine.h"
 
 typedef struct noeud Noeud;
@@ -53,4 +54,3 @@ Reseau* creer_Reseau(int gamma);
 void liberer_Reseau(Reseau *R);
 void maj_voisins(Reseau *R, Noeud *v, Noeud *n);
 #endif
-
