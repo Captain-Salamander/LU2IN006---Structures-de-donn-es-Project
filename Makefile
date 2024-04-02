@@ -34,7 +34,7 @@ HachageMain.o: HachageMain.c
 Hachage.o: Hachage.c
 	$(CC) $(CFLAGS) -c $^
 
-#Liste
+#Chaine
 ChaineMain: ChaineMain.o Chaine.o SVGwriter.o
 	$(CC) $(CFLAGS) -o $@ $^ -lm
 
@@ -52,9 +52,9 @@ main: Chaine.o Reseau.o Hachage.o ArbreQuat.o main.o SVGwriter.o
 	$(CC) $(CFLAGS) -o $@ $^ -lm
 
 graphtemps: main
-	bash tempsdecalcul.sh
+	./main
 	gnuplot -p < commande.txt
 
 #Nettoyage
 clean:
-	rm -f *.o *.html *Main ReconstitueReseau test* timedata.txt main courbes_vitesse.ps
+	rm -f *.o *.html *Main ReconstitueReseau test* timedata.txt main courbesVitesse*

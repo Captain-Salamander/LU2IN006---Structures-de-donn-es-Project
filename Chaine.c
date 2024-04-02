@@ -241,7 +241,7 @@ void ecrireChaines(Chaines *C, FILE *f){
 //Question 1.3
 //Création du fichier SVG en html à partir d’un struct Chaines (donné sur moodle)
 void afficheChainesSVG(Chaines *C, char* nomInstance){
-    //int i; //Variable non untilisée
+    /*int i;*/ /*Variable non untilisée*/
     double maxx=0,maxy=0,minx=1e6,miny=1e6;
     CellChaine *ccour;
     CellPoint *pcour;
