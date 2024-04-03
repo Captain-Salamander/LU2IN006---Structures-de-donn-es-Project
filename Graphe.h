@@ -39,11 +39,9 @@ typedef struct{
 
 Arete* creerArete(int u, int v);
 Cellule_arete* creerCellule_arete(Arete *a);
-Commod creerCommod(int e1, int e2);
 Sommet* creerSommet(int num, double x, double y);
 Graphe* creerGraphe(Reseau* r);
 
-void libererArete(Arete *a);
 void libererCellule_Arete(Cellule_arete *c);
 void libererSommet(Sommet *s);
 void libererGraphe(Graphe *g);

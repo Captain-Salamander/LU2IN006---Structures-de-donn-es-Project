@@ -24,6 +24,12 @@ Reseau.o: Reseau.c
 Graphe.o: Graphe.c
 	$(CC) $(CFLAGS) -c $^
 
+GrapheMain.o: GrapheMain.c
+	$(CC) $(CFLAGS) -c $^
+
+GrapheMain: GrapheMain.o Chaine.o Reseau.o ArbreQuat.o Graphe.o SVGwriter.o
+	$(CC) $(CFLAGS) -o $@ $^ -lm
+
 #ArbreQuat
 ArbreQuat.o: ArbreQuat.c
 	$(CC) $(CFLAGS) -c $^

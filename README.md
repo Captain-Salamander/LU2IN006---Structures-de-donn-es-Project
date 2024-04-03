@@ -26,4 +26,4 @@ o(n²) pour la liste:
 o(n/m) pour la table de hachage:
     La taille de la table de hachage (m) correspond au nombre de points maximal pouvant être créé (n). La complexité, dans le cas idéal serait donc o(1) mais nous rencontrons sûrement des collisions qui augmentent la complexité.
 o(log4(n)) pour l'arbre:
-    L'arbre quaternaire permet une recherche dichotomique qui permet de trouver un point très rapidement.
+    L'arbre quaternaire permet une recherche dichotomique qui permet de trouver un point très rapidement. Cela explique pourquoi l'efficacité relative de l'arbre augmente le plus il a de points dans le reseau.
