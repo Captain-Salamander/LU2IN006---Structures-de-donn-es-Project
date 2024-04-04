@@ -53,4 +53,6 @@ void liberer_CellCommodite(CellCommodite *C);
 Reseau* creer_Reseau(int gamma);
 void liberer_Reseau(Reseau *R);
 void maj_voisins(Reseau *R, Noeud *v, Noeud *n);
+
 #endif
+
