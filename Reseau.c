@@ -151,11 +151,18 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
     }
 
     //Recherche du noeud dans le réseau
-    CellNoeud* c = R->noeuds;
-    while(c){
-        if((c->nd->x == x) && (c->nd->y == y)){
-            return c->nd;
+
+    CellNoeud *c = R->noeuds, *prec = NULL;
+    for(int i=0; (i < R->nbNoeuds) && (c->nd->x <= x); i++){
+        if(c->nd->x == x){
+            if(c->nd->y == y){
+                return c->nd;
+            }else if(c->nd->y > y){
+                break;
+            }
         }
+
+        prec = c;
 
         c = c->suiv;
     }
@@ -166,15 +173,25 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
         printf("Erreur création Noeud rechercheCreeNoeudListe\n");
         return NULL;
     }
-    c = creer_CellNoeud(n);
-    if(c==NULL){ 
+
+    CellNoeud* cn = creer_CellNoeud(n);
+    if(cn==NULL){ 
+
         printf("Erreur création CellNoeud rechercheCreeNoeudListe\n");
         liberer_Noeud(n);
         return NULL;
     }
 
-    c->suiv = R->noeuds;
-    R->noeuds = c;
+
+    /*Ajout du noeud de manière a garder la liste de noeuds créés triée*/
+    if(prec==NULL){
+        cn->suiv = R->noeuds;
+        R->noeuds = cn;
+    }else{
+        cn->suiv = c;
+        prec->suiv = cn;
+    }
+
     (R->nbNoeuds)++;
 
     return n;

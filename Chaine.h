@@ -9,6 +9,8 @@ Alexander Dimanachki 21112989
 #include<stdlib.h>
 #include <string.h>
 #include<math.h>
+#include<time.h>
+
 #include "SVGwriter.h"
 
 /* Liste chainee de points */
@@ -51,4 +53,7 @@ void ecrireChaines(Chaines *C, FILE *f);
 
 //Question 1.4
 double longueurChaine(CellChaine *c);
+/*Question 6.2*/
+Chaines* generationAleatoire(int nbChaines, int nbPointsChaine, int xmax, int ymax);
+
 #endif	

@@ -4,7 +4,9 @@
 CC = gcc
 CFLAGS = -Wno-format-zero-length -g
 
-all: ChaineMain ReconstitueReseau HachageMain
+
+all: ChaineMain ReconstitueReseau HachageMain main
+
 
 #Général
 SVGwriter.o: SVGwriter.c
@@ -20,6 +22,16 @@ ReconstitueReseau.o: ReconstitueReseau.c
 Reseau.o: Reseau.c
 	$(CC) $(CFLAGS) -c $^
 
+#Graphe
+Graphe.o: Graphe.c
+	$(CC) $(CFLAGS) -c $^
+
+GrapheMain.o: GrapheMain.c
+	$(CC) $(CFLAGS) -c $^
+
+GrapheMain: GrapheMain.o Chaine.o Reseau.o ArbreQuat.o Graphe.o SVGwriter.o
+	$(CC) $(CFLAGS) -o $@ $^ -lm
+
 #ArbreQuat
 ArbreQuat.o: ArbreQuat.c
 	$(CC) $(CFLAGS) -c $^
@@ -34,7 +46,8 @@ HachageMain.o: HachageMain.c
 Hachage.o: Hachage.c
 	$(CC) $(CFLAGS) -c $^
 
-#Liste
+#Chaine
+
 ChaineMain: ChaineMain.o Chaine.o SVGwriter.o
 	$(CC) $(CFLAGS) -o $@ $^ -lm
 
@@ -44,9 +57,18 @@ ChaineMain.o: ChaineMain.c
 Chaine.o: Chaine.c
 	$(CC) $(CFLAGS) -c $^
 
-calcultemps:
-	bash tempsdecalcul.sh
+#Calcul du temps
+main.o: main.c
+	$(CC) $(CFLAGS) -c $^
+
+main: Chaine.o Reseau.o Hachage.o ArbreQuat.o main.o SVGwriter.o
+	$(CC) $(CFLAGS) -o $@ $^ -lm
+
+graphtemps: main
+	./main
+	gnuplot -p < commande.txt
 
 #Nettoyage
 clean:
-	rm -f *.o *.html *Main ReconstitueReseau test* time*
+	rm -f *.o *.html *Main ReconstitueReseau test* timedata.txt main courbesVitesse*
+

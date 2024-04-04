@@ -113,10 +113,17 @@ void ins_en_tete_chaine(Chaines* C, int numero){
     CellChaine* c = creer_cellChaine(numero);
     if(c==NULL){
         printf("Impossible d'insérer la chaine en tete\n");
+
+        return;
+
     }
 
     c->suiv = C->chaines;
     C->chaines = c;
+
+
+    return;
+
 }
 
 //Insertion d'un point dans une chaine
@@ -238,7 +245,9 @@ void ecrireChaines(Chaines *C, FILE *f){
 //Question 1.3
 //Création du fichier SVG en html à partir d’un struct Chaines (donné sur moodle)
 void afficheChainesSVG(Chaines *C, char* nomInstance){
-    //int i; //Variable non untilisée
+
+    /*int i;*/ /*Variable non untilisée*/
+
     double maxx=0,maxy=0,minx=1e6,miny=1e6;
     CellChaine *ccour;
     CellPoint *pcour;
@@ -358,3 +367,32 @@ int comptePointsTotal(Chaines *C){
 
     return cpt;
 }
+
+/*Question 6.2*/
+Chaines* generationAleatoire(int nbChaines, int nbPointsChaine, int xmax, int ymax){
+    Chaines* C = creer_chaines(3, nbChaines);
+    if(C==NULL){
+        printf("Chaines non créés pour generationAleatoire\n");
+        return NULL;
+    }
+
+    srand(time(NULL));
+    double x, y;
+
+    /*Boucle passant par toutes les chaines*/
+    for(int i=1; i<=nbChaines; i++){
+        ins_en_tete_chaine(C, i);
+
+        /*Boucle créant tous les points de la chaine*/
+        for(int j=0; j<nbPointsChaine; j++){
+            /*Definition coordonnees du nouveau point*/
+            x = xmax* ((double)rand() / (double)RAND_MAX);
+            y = ymax* ((double)rand() / (double)RAND_MAX);
+            
+            ins_en_tete_point(C->chaines, x, y);
+        }
+    }
+
+    return C;
+}
+

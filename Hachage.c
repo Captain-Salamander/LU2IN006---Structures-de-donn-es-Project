@@ -20,6 +20,11 @@ TableHachage* creer_TableHachage(int m){
     H->nbElement = 0;
     H->tailleMax = m;
     H->T = (CellNoeud**)malloc(sizeof(CellNoeud*)*m);
+    if(H->T == NULL){
+        printf("Erreur malloc H->T creation TableHachage\n");
+        free(H);
+        return NULL;
+    }
 
     //Initialisation des pointeurs du tableau à NULL
     for(int i=0; i<m; i++){
