@@ -148,12 +148,12 @@ Chaines* lectureChaines(FILE* f){
     
     //Lecture de Gamma et NbChaines
     int gamma, nbChaines;
-    char buffer[256];
-    fgets(buffer, 256, f);
+    char buffer[10000];
+    fgets(buffer, 10000, f);
     sscanf(buffer, "NbChain: %d", &nbChaines);
-    fgets(buffer, 256, f);
+    fgets(buffer, 10000, f);
     sscanf(buffer, "Gamma: %d", &gamma);
-    fgets(buffer, 256, f);
+    fgets(buffer, 10000, f);
 
     //Création de l'ensemble des chaines
     Chaines* C = creer_chaines(gamma, nbChaines);
@@ -186,7 +186,7 @@ Chaines* lectureChaines(FILE* f){
             ins_en_tete_point(C->chaines, x, y); //C->chaines sera toujours la bonne chaine comme l'insertion est en tete
         }
 
-        fgets(buffer, 256, f);
+        fgets(buffer, 10000, f);
     }
 
     return C;
@@ -215,7 +215,7 @@ void ecrireChaines(Chaines *C, FILE *f){
         return;
     }
 
-    char buffer[256], coordBuffer[256];
+    char buffer[10000], coordBuffer[10000];
     CellPoint* p;
     int cpt;
     while(c){

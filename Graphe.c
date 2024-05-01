@@ -199,3 +199,218 @@ void libererGraphe(Graphe *g){
 
     free(g);
 }
+
+/*Question 7.2*/
+S_file* ppChemin(Graphe *g, int u, int v){
+    /*Si le sommet de depart est le meme que le sommet final*/
+    if(u==v){
+        printf("ppChemin: Sommet de départ et d'arrivée est le même\n");
+        return NULL;
+    }
+
+    /*Creation tableau distance*/
+    int* distance = (int*)malloc(sizeof(int)*(g->nbsom));
+    if(distance==NULL){
+        printf("Erreur malloc tableau distance ppChemin\n");
+        return NULL;
+    }
+    for(int i=0; i<(g->nbsom); i++){
+        distance[i] = 0;
+    }
+
+    /*Creation tableau visite*/
+    int* visite = (int*)malloc(sizeof(int)*(g->nbsom));
+    if(visite==NULL){
+        printf("Erreur malloc tableau visite ppChemin\n");
+        free(distance);
+        return NULL;
+    }
+    for(int i=0; i<(g->nbsom); i++){
+        visite[i] = 0;
+    }
+
+    /*Creation de la file*/
+    S_file* f = (S_file*)malloc(sizeof(S_file));
+    if(f==NULL){
+        printf("Erreur malloc S_file dans ppChemin\n");
+        free(distance);
+        free(visite);
+        return NULL;
+    }
+    Init_file(f);
+    enfile(f, u);
+    visite[u] = 1;
+
+    /*Création du tableau 'parent' pour la question 7.3*/
+    int* parent = (int*)malloc(sizeof(int)*(g->nbsom));
+    if(parent==NULL){
+        printf("Erreur malloc tableau visite ppChemin\n");
+        free(distance);
+        free(visite);
+        free(f);
+        return NULL;
+    }
+    for(int i=0; i<(g->nbsom); i++){
+        parent[i] = -1;
+    }
+
+    /*Boucle effectuant le parcours en largeur*/
+    while(!(estFileVide(f))){
+        int sd = defile(f);
+
+        Cellule_arete* ca = g->T_som[sd]->L_voisin;
+        while(ca){
+            int sv;
+            if(sd == ca->a->u){
+                sv = ca->a->v;
+            }else{
+                sv = ca->a->u;
+            }
+
+            if(visite[sv]==0){
+                visite[sv] = 1;
+                distance[sv] = distance[sd] + 1;
+                parent[sv] = sd;
+                enfile(f, sv);
+            }
+            ca = ca->suiv;
+        }
+    }
+
+    if(distance[v]==0){
+        printf("Le sommet %d n'est pas accessible depuis le sommet %d\n", v, u);
+        free(distance);
+        free(visite);
+        free(parent);
+        free(f);
+        return NULL;
+    }
+    
+    int d = distance[v];
+    free(distance);
+    free(visite);
+
+    /*On utilise la file d'avant qui est vide pour générer la chaine que nous retournerons*/
+    /*On connait le dernier sommet de la chaine: v*/
+    enfile(f, v);
+
+    /*On retrace le chemin de v à u en remontant dans le tableau 'parent'*/
+    int p;
+    for(int i=0; i<d; i++){
+        p = parent[(f->tete->val)];
+        if(p == -1){
+            printf("Erreur recherche parent ppChemin\n");
+            free(f);
+            return NULL;
+        }
+
+        /*On ajoute le parent de chaque sommet a la tete de la chaine*/
+        Cellule_file *nouv=(Cellule_file *)malloc(sizeof(Cellule_file));
+        nouv->val= p;
+        nouv->suiv = f->tete;
+        f->tete = nouv;
+    }
+
+    free(parent);
+    return f;
+}
+
+/*Question 7.4*/
+/*Fonctions creation et liberation de matrice*/
+/*Creation matrice*/
+int** creerMatrice(int nbLignes, int nbColonnes){
+    int** matrice = (int**)malloc(sizeof(int*)*nbLignes);
+    if(matrice==NULL){
+        printf("Erreur malloc creerMatrice\n");
+        return NULL;
+    }
+
+    for(int i=0; i<nbLignes; i++){
+        matrice[i] = (int*)malloc(sizeof(int)*nbColonnes);
+        if(matrice[i] == NULL){
+            printf("Erreur malloc creerMatrice\n");
+            /*Si malloc d'une ligne  echoue, nous devons libérer celles qui ont deja été créées*/
+            for(int dejacree=0; dejacree<i; dejacree++){
+                free(matrice[dejacree]);
+            }
+            free(matrice);
+            return NULL;
+        }
+
+        /*Initialisation des valeurs du tableau à 0*/
+        for(int j=0; j<nbColonnes; j++){
+            matrice[i][j] = 0;
+        }
+    }
+
+    return matrice;
+}
+
+/*Liberation matrice*/
+void libererMatrice(int** matrice, int nbLignes){
+    if(matrice == NULL){
+        printf("Matrice deja libérée\n");
+        return;
+    }
+
+    for(int i=0; i<nbLignes; i++){
+        free(matrice[i]);
+    }
+    free(matrice);
+}
+
+
+int reorganiseReseau(Reseau* r){
+    if(r==NULL){
+        printf("Impossible de reorganiser Reseau qui n'existe pas\n");
+        return -1;
+    }
+
+    Graphe *g = creerGraphe(r);
+
+    int** matrice = creerMatrice(g->nbcommod, g->nbsom);
+
+    /*Boucle passant par les commodités*/
+    for(int i=0; i<(g->nbcommod); i++){
+        S_file* chaine = ppChemin(g, g->T_commod[i].e1, g->T_commod[i].e2);
+
+        if(chaine == NULL){
+            printf("Commodite invalide\n");
+            libererMatrice(matrice, g->nbcommod);
+            libererGraphe(g);
+            return -1;
+        }
+
+        /*On parcours la chaine pour mettre a jour la matrice*/
+        int som;
+        while(!(estFileVide(chaine))){
+            som = defile(chaine);
+            matrice[i][som] = 1;
+
+            /*On controle a chaque fois le nombre de chaines passant par ce sommet*/
+            int cpt = 0;
+            for(int j=0; j<=i; j++){
+                cpt += matrice[j][som];
+
+                /*Cas ou plus de 3 chaines passent par un sommet*/
+                if(cpt>(r->gamma)){
+                    /*Nous vidons et libèrons la chaine, la matrice et le graphe*/
+                    while(!(estFileVide(chaine))){
+                        defile(chaine);
+                    }
+                    free(chaine);
+                    libererMatrice(matrice, g->nbcommod);
+                    libererGraphe(g);
+                    return 0; /*Retourne faux*/
+                }
+            }
+        }
+
+        free(chaine);
+    }
+
+    /*Si nous sortons de la boucle, cela veut dire qu'il n'y a aucun sommet par lequel traversentplus de 3 chaines*/
+    libererMatrice(matrice, g->nbcommod);
+    libererGraphe(g);
+    return 1; /*Retourne vrai*/
+}
