@@ -25,6 +25,7 @@ int main(int argc, char** argv){
     FILE *f2 = fopen("testEcriture.cha", "w");
     if(f2==NULL){
         printf("Erreur ouverture fichier testEcriture.cha\n");
+
         return 2;
     }
 
@@ -59,4 +60,5 @@ int main(int argc, char** argv){
 
     liberer_chaines(C);
     liberer_chaines(Caleatoire);
+
 }

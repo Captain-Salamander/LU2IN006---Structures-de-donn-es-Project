@@ -151,6 +151,7 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
     }
 
     //Recherche du noeud dans le réseau
+
     CellNoeud *c = R->noeuds, *prec = NULL;
     for(int i=0; (i < R->nbNoeuds) && (c->nd->x <= x); i++){
         if(c->nd->x == x){
@@ -162,6 +163,7 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
         }
 
         prec = c;
+
         c = c->suiv;
     }
 
@@ -171,12 +173,15 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
         printf("Erreur création Noeud rechercheCreeNoeudListe\n");
         return NULL;
     }
+
     CellNoeud* cn = creer_CellNoeud(n);
     if(cn==NULL){ 
+
         printf("Erreur création CellNoeud rechercheCreeNoeudListe\n");
         liberer_Noeud(n);
         return NULL;
     }
+
 
     /*Ajout du noeud de manière a garder la liste de noeuds créés triée*/
     if(prec==NULL){
@@ -186,6 +191,7 @@ Noeud* rechercheCreeNoeudListe(Reseau *R, double x, double y){
         cn->suiv = c;
         prec->suiv = cn;
     }
+
     (R->nbNoeuds)++;
 
     return n;

@@ -4,7 +4,9 @@
 CC = gcc
 CFLAGS = -Wno-format-zero-length -g
 
+
 all: ChaineMain ReconstitueReseau HachageMain main
+
 
 #Général
 SVGwriter.o: SVGwriter.c
@@ -48,6 +50,7 @@ Hachage.o: Hachage.c
 	$(CC) $(CFLAGS) -c $^
 
 #Chaine
+
 ChaineMain: ChaineMain.o Chaine.o SVGwriter.o
 	$(CC) $(CFLAGS) -o $@ $^ -lm
 
@@ -71,3 +74,4 @@ graphtemps: main
 #Nettoyage
 clean:
 	rm -f *.o *.html *Main ReconstitueReseau test* timedata.txt main courbesVitesse*
+
