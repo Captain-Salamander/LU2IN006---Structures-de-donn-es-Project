@@ -5,7 +5,7 @@ CC = gcc
 CFLAGS = -Wno-format-zero-length -g
 
 
-all: ChaineMain ReconstitueReseau HachageMain main
+all: ChaineMain ReconstitueReseau HachageMain main GrapheMain
 
 
 #Général

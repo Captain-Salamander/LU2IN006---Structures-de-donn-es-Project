@@ -48,8 +48,6 @@ void liberer_cellChaine(CellChaine* c);
 void liberer_chaines(Chaines* C);
 void ins_en_tete_chaine(Chaines* C, int numero);
 void ins_en_tete_point(CellChaine* c, double x, double y);
-Chaines* lectureChaines(FILE* f);
-void ecrireChaines(Chaines *C, FILE *f);
 
 //Question 1.4
 double longueurChaine(CellChaine *c);

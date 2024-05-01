@@ -257,7 +257,7 @@ Noeud* rechercheCreeNoeudArbre(Reseau* R, ArbreQuat** a, ArbreQuat* parent, doub
     }
 
     /*Cas où a est une cellule interne*/
-    if((Updates until question 7.1*a != NULL) && ((*a)->noeud == NULL)){
+    if((a != NULL) && ((*a)->noeud == NULL)){
         return rechercheCreeNoeudArbre(R, direction(x, y, *a), *a, x, y);
     }
 }
